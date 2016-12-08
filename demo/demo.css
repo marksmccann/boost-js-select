@@ -1,0 +1,36 @@
+.select {
+    display: inline-block;
+    border: solid 1px #666;
+    padding: .1em .5em;
+}
+
+.select.is-disabled {
+    color: #ccc;
+    border-color: #ccc;
+}
+
+.select-menu {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    border: solid 1px #666;
+}
+
+.select-option {
+    position: relative;
+    padding: .25em .5em .25em 1.25em;
+}
+
+.select-option.is-selected:before {
+    content: '\2713 ';
+    display: inline-block;
+    position: absolute;
+    left: .25em;
+    top: .25em;
+}
+
+.select-option.is-active {
+    background-color: #666;
+    color: #fff;
+}

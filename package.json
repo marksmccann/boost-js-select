@@ -1,0 +1,35 @@
+{
+  "name": "boost-js-select",
+  "title": "Boost JS select",
+  "version": "0.0.1",
+  "description": "A style-free Select Menu plugin for jQuery and Boost JS",
+  "main": "src/select.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marksmccann/boost-js-select.git"
+  },
+  "author": "“Mark <“mail@markmccann.me”>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marksmccann/boost-js-select/issues"
+  },
+  "homepage": "https://github.com/marksmccann/boost-js-select#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "gulp-uglifycss": "^1.0.6",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.1.2",
+    "mocha-jsdom": "^1.1.0"
+  },
+  "dependencies": {
+    "boost-js": "^0.3.2",
+    "jquery": "^3.1.1"
+  }
+}

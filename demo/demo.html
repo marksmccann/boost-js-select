@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="A demo of Boost JS Select Menu">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Boost JS Select Menu Demo</title>
+        <link href="demo.css" rel="stylesheet">
+    </head>
+    <body>
+        <label for="select">Select Something:</label>
+        <select id="select" name="select" data-init="select">
+            <option value="1">A, Option 1</option>
+            <option value="2">B, Option 2</option>
+            <option value="3">C, Option 3</option>
+            <option value="4">D, Option 4</option>
+            <option value="5">E, Option 5</option>
+        </select>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+        <script src="https://cdn.rawgit.com/marksmccann/boost-js/v0.4.1/src/boost.js"></script>
+        <script src="../dist/select.min.js"></script>
+        <script>
+            var boost = $.fn.boost;
+            var select = $.fn.boost.select;
+            $.fn.select = boost( select.plugin, select.defaults );
+            boost.auto();
+        </script>
+    </body>
+</html>
