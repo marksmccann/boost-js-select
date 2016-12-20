@@ -1,7 +1,7 @@
 {
   "name": "boost-js-select",
   "title": "Boost JS select",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A style-free Select Menu plugin for jQuery and Boost JS",
   "main": "src/select.js",
   "scripts": {

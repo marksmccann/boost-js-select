@@ -11,7 +11,7 @@ npm install boost-js-select
 ```
 Install in browser:
 ```html
-<script src="https://cdn.rawgit.com/marksmccann/boost-js-select/v0.0.2/dist/select.min.js"></script>
+<script src="https://cdn.rawgit.com/marksmccann/boost-js-select/v0.0.3/dist/select.min.js"></script>
 ```
 
 Usage
