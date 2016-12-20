@@ -1,4 +1,4 @@
-Boost JS Select Menu
+Boost JS Select Menu [![Build Status](https://travis-ci.org/marksmccann/boost-js-select.svg?branch=master)](https://travis-ci.org/marksmccann/boost-js-select)
 ==================================================
 A style-free and accessible select menu plugin for jQuery and [Boost JS](https://github.com/marksmccann/boost-js). While other plugins style your select menu for you, this plugin only handles the functionality, leaving the layout and styling up to you.
 
