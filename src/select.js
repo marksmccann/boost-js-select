@@ -3,7 +3,7 @@
  * A style-free select menu plugin for jQuery and Boost JS
  * @author Mark McCann (www.markmccann.me)
  * @license MIT
- * @version 0.0.1
+ * @version 0.0.2
  * @requires jQuery, boost-js
  */
 
