@@ -20,7 +20,7 @@
     var Select = function() {
         // local instance
         var inst = this;
-        // generate new id for select
+        // generate new id for select if one doesnt exist
         var id = inst.id !== null ? inst.id : 'select-'+ uniqueId()
         // determines if select is disabled or not
         inst.disabled = inst.source.attr('disabled') ? true : false;
@@ -62,7 +62,7 @@
                 // enter/return
                 if(e.keyCode === 13) {
                     if( inst.isOpen() ) {
-                        inst.changeTo( inst.activeOption() ).toggle();
+                        inst.changeTo( inst.activeOption() ).close();
                     }
                 }
                 // tab
@@ -77,7 +77,7 @@
             })
         // create the dropdown menu for the select
         inst.menu = $( document.createElement('ul') )
-            .attr('aria-hidden', 'false')
+            .attr('aria-hidden', 'true')
             .attr('aria-labelledby', inst.select[0].id )
             .attr('id', inst.select.attr('aria-owns') )
             .attr('role', 'listbox')
@@ -117,10 +117,10 @@
             .attr('aria-labelledby', inst.options[ inst.selectedOption() ].id )
             .add( inst.menu )
             .attr('aria-activedescendant', inst.options[ inst.selectedOption() ].id )
-        // update for attribute of the label and set focus 
+        // update for attribute of the label and set focus
         // to select if it is clicked
         if( inst.id !== null ) {
-            $( 'label[for="'+inst.id+'"]' )
+            inst.label = $( 'label[for="'+inst.id+'"]' )
                 .attr( 'for', inst.select[0].id )
                 .on('click', function(){
                     inst.select[0].focus();
@@ -139,6 +139,8 @@
         // hiding it and appending the new one before it
         inst.source.css('display','none');
         inst.source[0].parentNode.insertBefore( inst.select[0], inst.source[0] );
+        // append menu to the body
+        document.body.appendChild(inst.menu[0]);
         // run the onInit callback
         if( $.isFunction(inst.settings.onInit) ) inst.settings.onInit.call(inst);
     }
@@ -152,7 +154,7 @@
          */
         changeTo: function( index, callback ) {
             // local instance
-            var inst = this;
+            var inst = this, evt;
             // make sure index is 1) not negative 2) not greater than
             // the number of options 3) not the currently selected option
             if( index >= 0 && index < inst.options.length && index !== inst.selectedOption() ) {
@@ -172,6 +174,10 @@
                 inst.activeTo( index );
                 // update the labelledby on select element
                 inst.select.attr('aria-labelledby', inst.options[ index ].id )
+                // trigger onchange events attached to select
+                evt = document.createEvent("HTMLEvents");
+                evt.initEvent("change", false, true);
+                inst.source[0].dispatchEvent(evt);
                 // run the callbacks
                 if( $.isFunction(callback) ) callback.call(this);
                 if( $.isFunction(inst.settings.onChange) ) inst.settings.onChange.call(this);
@@ -202,7 +208,7 @@
             return inst;
         },
         /**
-         * retrieve the index of the selected option from 
+         * retrieve the index of the selected option from
          * the original select element
          * @return {integer} index
          */
@@ -260,6 +266,8 @@
             var inst = this;
             // make sure it is hidden before opening
             if( !inst.isOpen() ) {
+                // position tip relative to source
+                inst.setPosition();
                 // add open attributes to select
                 inst.select
                     .attr( 'aria-expanded', 'true' );
@@ -267,10 +275,6 @@
                 inst.menu
                     .addClass( inst.settings.openClass )
                     .attr('aria-hidden', 'false');
-                // position tip relative to source
-                inst.setPosition();
-                // append menu to the body
-                document.body.appendChild(inst.menu[0]);
                 // run the callbacks
                 if( $.isFunction(callback) ) callback.call(inst);
                 if( $.isFunction(inst.settings.onOpen) ) inst.settings.onOpen.call(inst);
@@ -295,9 +299,7 @@
                 inst.menu
                     .removeClass( inst.settings.openClass )
                     .attr('aria-hidden', 'true');
-                // remove menu from the body
-                document.body.removeChild(this.menu[0]);
-                // if active option does not match selected, update it
+                // if active option does not match selected, reset it
                 if( inst.activeOption() !== inst.selectedOption() ) {
                     inst.activeTo( inst.selectedOption() );
                 }
@@ -321,7 +323,7 @@
          * @return {boolean}
          */
         isOpen: function() {
-            return document.body.contains(this.menu[0]) 
+            return document.body.contains(this.menu[0])
                 && this.menu.hasClass( this.settings.openClass );
         },
         /**
@@ -353,7 +355,10 @@
         disable: function() {
             this.select
                 .addClass( this.settings.disabledClass )
+                .attr('aria-disabled', 'true' )
                 .attr('tabindex', '-1')
+            this.source
+                .attr('disabled','disabled')
             this.disabled = true;
             return this;
         },
@@ -365,7 +370,10 @@
         enable: function() {
             this.select
                 .removeClass( this.settings.disabledClass )
+                .attr('aria-disabled', 'false' )
                 .attr('tabindex', '0')
+            this.source[0]
+                .removeAttribute('disabled')
             this.disabled = false;
             return this;
         }

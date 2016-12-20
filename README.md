@@ -1,6 +1,6 @@
 Boost JS Select Menu
 ==================================================
-A style-free and accessible select menu plugin for jQuery and [Boost JS](https://github.com/marksmccann/boost-js). While other plugins style your select menu for you, this plugin only handles the functionality, leaving the layout styling up to you.
+A style-free and accessible select menu plugin for jQuery and [Boost JS](https://github.com/marksmccann/boost-js). While other plugins style your select menu for you, this plugin only handles the functionality, leaving the layout and styling up to you.
 
 
 Installation
@@ -47,16 +47,17 @@ Options
 --------------------------------------
 Name | Default | Description
 --- | --- | ---
-activeClass | `"is-active"` | the class added to option in menu that is highlighted
-openClass | `"is-open"` | the class added to menu when it is visible
-selectedClass | `"is-selected"` | the class added to option that is selected
-primaryClass | `"select"` | a string used to prefix classes for the select markup structure
-disabledClass | `"select"` | the class added to select when disabled
-matchedWidth | `false` | will set the width of the menu equal to the select
+activeClass<sup>1<sup> | `"is-active"` | the class added to option in menu that is highlighted
+openClass<sup>1<sup> | `"is-open"` | the class added to menu when it is visible
+selectedClass<sup>1<sup> | `"is-selected"` | the class added to option that is selected
+primaryClass<sup>1<sup> | `"select"` | a string used to create classes for the markup structure.
+disabledClass<sup>1<sup> | `"is-disabled"` | the class added to select when disabled
+matchWidth | `false` | will set the width of the menu equal to the select
 onOpen | `null` | a callback function called after the menu is made visible
 onClose | `null` | a callback function called after the menu is hidden
-onChange | `null` | a callback function called after a selection is changed
+onChange | `null` | a callback function called after a selection is made
 onInit | `null` | a callback function called after the select is initialized
+*1. See the "Class Placement" section below for a guide on where these classes are placed on the rendered markup.*
 ### Usage
 ```javascript
 $('#tooltip').tooltip({
@@ -67,15 +68,14 @@ $('#tooltip').tooltip({
 ```
 \- or -
 ```html
-<select id="select" data-matched-width="true">...</select>
+<select id="select" data-match-width="true">...</select>
 ```
 
-### Classes
+### Class Placement
 ```html
 <span class="[primaryClass] [disabledClass]">...</span>
 <ul class="[primaryClass]-menu [openClass]">
     <li class="[primaryClass]-option [activeClass] [selectedClass]"></li>
-    ...
 </ul>
 ```
 
@@ -94,7 +94,7 @@ instance.close();
 ### isOpen()
 Determines if them menu is open and visible or not. Returns boolean.
 ```javascript
-instance.isVisible();
+instance.isOpen(); // false
 ```
 ### toggle( fn )
 Closes the menu if it is open and vice versa. `fn`: optional callback function.
@@ -117,7 +117,7 @@ Enables a disabled select.
 instance.enable();
 ```
 ### findOption( char )
-Compares the first character of each option's value against the alphanumeric character passed in and returns the index of the first match. Will return index of active option if no match is found.
+Compares the first character of each option's html content against the character passed in and returns the index of the first match. Will return index of active option if no match is found.
 ```javascript
 instance.findOption( 'a' );
 ```
@@ -147,9 +147,34 @@ Updates the active/highlighted option to the index passed in.
 instance.activeTo( 1 );
 ```
 ### changeTo( int, fn )
-Updates the selected option to the index passed in. `fn`: optional callback function called after change.
+Updates the selected option to the index passed in. `fn`: optional callback function called after change. Will also trigger any change events assigned to the original select element.
 ```javascript
 instance.changeTo( 1 );
+```
+### select
+The new, customizable "select" element.
+```javascript
+instance.select;
+```
+### menu
+The new, customizable dropdown menu element for the select.
+```javascript
+instance.menu;
+```
+### options
+The set of new, customizable "option" elements that are direct descendants of the menu.
+```javascript
+instance.options;
+```
+### label
+The label associated with the select.
+```javascript
+instance.label;
+```
+### disabled
+A boolean value which store the disabled state of the select.
+```javascript
+instance.disabled; // false
 ```
 
 Running Tests
